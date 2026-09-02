@@ -113,7 +113,7 @@ export const STRESS_AGENTS: AgentThreat[] = [
     status: 'Attacking',
     reqPerSec: 51200,
     resilienceScore: 99.8,
-    conductorResponse: 'Absorbed 51.2K TPS with 0% drop rate',
+    conductorResponse: 'Rate limiter engaged — zero requests dropped',
     severity: 'Critical',
     icon: 'Activity',
     color: '#3B82F6',
@@ -182,9 +182,9 @@ export const MOCK_RUNS: WorkflowRun[] = [
     started: 'Just now (Live Attack)',
     duration: '4.12s',
     trigger: 'CHAOS_HARNESS',
-    correlationId: 'corr_viren_proof_01',
+    correlationId: 'corr_chaos_harness_001',
     agentId: 'agent-04',
-    resilienceRate: '99.98%',
+    resilienceRate: 'N/A (simulated)',
     dagNodes: [
       { id: 'node-1', label: '1. Ingest Surge', sublabel: '50K req/sec burst', status: 'completed', latency: '2ms', iconType: 'terminal', taskType: 'HTTP_INGEST' },
       { id: 'node-2', label: '2. Threat Router', sublabel: 'Vector Classifier', status: 'completed', latency: '4ms', iconType: 'router', taskType: 'DYNAMIC_FORK' },
@@ -267,24 +267,21 @@ export const MOCK_RUNS: WorkflowRun[] = [
       status: 'RUNNING',
       harness: {
         active_agents: 8,
-        total_injected_threats: 142890,
-        mitigated_faults: 142861,
-        concurrency_peak: 51200,
         circuit_breaker_trips: 3,
-        auto_recovery_time_avg: '12ms'
+        auto_recovery_time_avg_ms: 12
       },
       conductor_metrics: {
-        queue_latency_p99: '18.4ms',
-        throughput_tps: 48200,
-        worker_pool_health: '100% (64/64 active)'
-      }
+        queue_latency_p99_ms: 18.4,
+        worker_pool_health: '64/64 active'
+      },
+      note: 'Illustrative simulation data — not measured production values'
     },
     terminalLogs: [
-      '[INFO 18:42:01.002] ⚡ [HARNESS] Agent-04 (50K_SURGE) initiated rate limit storm attack',
-      '[INFO 18:42:01.006] 🛡️ [CONDUCTOR] Gateway rate limiter engaged. 0 requests dropped.',
-      '[WARN 18:42:01.018] ⚠️ [WORKER] Worker-09 reported artificial delay injection (480ms).',
-      '[SUCCESS 18:42:01.026] ✅ [HEALER] Circuit breaker isolated worker-09. Rerouted 1,200 tasks in 8ms.',
-      '[INFO 18:42:01.044] 📊 [TELEMETRY] System health: 99.98% resilience rate under peak 51.2K TPS attack.'
+      '[INFO 18:42:01.002] [HARNESS] Agent-04 (50K_SURGE) initiated rate limit storm attack.',
+      '[INFO 18:42:01.006] [CONDUCTOR] Gateway rate limiter engaged. No requests dropped.',
+      '[WARN 18:42:01.018] [WORKER] Worker-09 reported artificial delay injection (480ms).',
+      '[INFO 18:42:01.026] [HEALER] Circuit breaker isolated worker-09. Rerouted tasks in 8ms.',
+      '[INFO 18:42:01.044] [TELEMETRY] Queue depth stabilizing. Worker pool healthy: 64/64 active.'
     ]
   },
   {

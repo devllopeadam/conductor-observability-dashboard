@@ -17,11 +17,12 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Orkes Conductor | 8-Agent Harness Observability Suite',
-  description: 'Interactive 8-Agent Stress Test & Workflow Execution Telemetry Dashboard for Orkes & Netflix Conductor.',
+  title: 'Workflow Observability Dashboard — UI Concept',
+  description: 'A workflow orchestration dashboard UI concept demonstrating execution monitoring, fault-injection visualization, and real-time telemetry.',
   icons: {
-    icon: '/icon.svg',
+    icon: '/favicon.ico',
   },
+  robots: 'noindex',
 }
 
 export const viewport: Viewport = {
@@ -36,6 +37,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${plusJakartaSans.variable} ${jetbrainsMono.variable} dark`}>
+      <head>
+        <meta name="robots" content="noindex" />
+      </head>
       <body className="antialiased font-sans bg-[#07172B] text-slate-100 selection:bg-cyan-500 selection:text-slate-950">
         {children}
         <Analytics />
